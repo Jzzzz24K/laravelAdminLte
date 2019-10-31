@@ -8,9 +8,9 @@
 require('./bootstrap');
 
 require('admin-lte');
-require('admin-lte/bower_components/raphael/raphael.min.js');
-require('admin-lte/bower_components/morris.js/morris.min.js');
-require('admin-lte/bower_components/jquery-knob/dist/jquery.knob.min.js');
-require('admin-lte/bower_components/moment/min/moment.min.js');
-require('admin-lte/bower_components/bootstrap-daterangepicker/daterangepicker.js');
-require('admin-lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js');
+// require('admin-lte/bower_components/raphael/raphael.min.js');
+// require('admin-lte/bower_components/morris.js/morris.min.js');
+// require('admin-lte/bower_components/jquery-knob/dist/jquery.knob.min.js');
+// require('admin-lte/bower_components/moment/min/moment.min.js');
+// require('admin-lte/bower_components/bootstrap-daterangepicker/daterangepicker.js');
+// require('admin-lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js');

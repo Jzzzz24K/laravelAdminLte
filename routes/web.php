@@ -12,5 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect('/home');
 });
+
+Auth::routes();
+
+Route::get('/index', 'HomeController@index');
+Route::get('/home', 'HomeController@home');
+
+
+Route::resource('/menu','MenuController');
