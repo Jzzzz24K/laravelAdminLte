@@ -6,10 +6,6 @@
         <div class="user-panel">
             <div class="pull-left image">
             </div>
-            {{--                <div class="pull-left info">--}}
-            {{--                    <p>Alexander Pierce</p>--}}
-            {{--                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>--}}
-            {{--                </div>--}}
         </div>
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
@@ -26,10 +22,20 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
             @foreach($menus as $menu)
-                <li>
-                    <a href="{{$menu->url}}" target="mainiframe"><i class="fa {{$menu->icon}}"><span>{{$menu->name}}</span></i></a>
-                </li>
+            <li class="treeview">
+                <a href="{{$menu->url}}">
+                    <i class="fa {{$menu->icon}}"></i> <span>{{$menu->name}}</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                @if($menu->children)
+                    @foreach($menu->children as $children)
+                        <ul class="treeview-menu">
+                            <li><a href="{{$children->url}}" target="mainiframe"><i class="fa {{$children->icon}}"></i>{{$children->name}}</a></li>
+                        </ul>
+                    @endforeach
+                @endif
+            </li>
             @endforeach
+
             <li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
