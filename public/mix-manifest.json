@@ -3,5 +3,6 @@
     "/css/app.css": "/css/app.css",
     "/css/select2.min.css": "/css/select2.min.css",
     "/js/select2.full.js": "/js/select2.full.js",
-    "/js/datatables.js": "/js/datatables.js"
+    "/js/datatables.js": "/js/datatables.js",
+    "/js/icheck.js": "/js/icheck.js"
 }

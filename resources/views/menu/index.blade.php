@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('styles')
     <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('css/icheck.blue.css')}}">--}}
     <style>
       .select2-container .select2-selection--single{
           height:34px;
@@ -38,41 +39,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap" style="margin-top: 1em;">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="menu" class="table table-bordered table-striped dataTable"
-                                           role="grid"
-                                           aria-describedby="example1_info" style="min-width: 980px;">
-                                        <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="menu">
-                                                菜单名称
-                                            </th>
-                                            <th class="sorting_asc" tabindex="0" aria-controls="menu">
-                                                图标
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="menu">
-                                                链接
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="menu">
-                                                等级
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="menu">
-                                                状态
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="menu">
-                                                操作
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-{{--                                        {!! $html !!}--}}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        <table id="menu" class="table table-bordered table-striped" style="margin-top:1em;">
+                            <thead>
+                            <tr>
+                                <th>菜单名称</th>
+                                <th>链接</th>
+                                <th>图标</th>
+                                <th>所属角色</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($pmenus as $menu)
+                                <tr>
+                                    <td>{{$menu->name}}</td>
+                                    <td>{{$menu->url}}</td>
+                                    <td>{{$menu->icon}}</td>
+                                    <td>暂无</td>
+                                    <td>{{$menu->status}}</td>
+                                    <td>编辑 删除</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -85,6 +75,7 @@
 @section('scripts')
     <script src="{{asset('js/select2.full.js')}}"></script>
     <script src="{{asset('js/datatables.js')}}"></script>
+    <script src="{{asset('js/icheck.js')}}"></script>
     <script>
         $(function(){
             $('#menu').DataTable({
@@ -94,7 +85,7 @@
                 'ordering'    : false,
                 'info'        : false,
                 'autoWidth'   : true,
-                'scrollX'     : true,
+                'scrollX'     : false,
             });
             $(".del").click(function (e) {
                 $("#modal-del").modal("show");
@@ -119,14 +110,13 @@
                 $("#modal-create").show();
                 $(".parentid").attr('value',$(e.target).data('id'));
             });
-            // $('.modal').on('show.bs.modal', function(){
-            //     var $this = $(this);
-            //     var $modal_dialog = $this.find('.modal-dialog');
-            //     // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
-            //     $this.css('position', 'fixed');
-            //     $modal_dialog.css({'margin-top': ($(window).height() - $modal_dialog.height()) / 2});
-            // });
+
             $('.select2').select2();
+
+            $('input[type="radio"].minimal').iCheck({
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
 
         });
 

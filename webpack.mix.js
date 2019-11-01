@@ -18,3 +18,6 @@ mix.copy('node_modules/admin-lte/bower_components/select2/dist/css/select2.min.c
 mix.copy('node_modules/admin-lte/bower_components/select2/dist/js/select2.full.js','public/js/select2.full.js');
 //dataTable插件
 mix.copy('node_modules/admin-lte/bower_components/datatables.net/js/jquery.dataTables.js','public/js/datatables.js');
+//icheck插件
+// mix.copy('node_modules/admin-lte/plugins/iCheck/square/blue.css','public/css/icheck.blue.css');
+mix.copy('node_modules/admin-lte/plugins/iCheck/icheck.js','public/js/icheck.js');

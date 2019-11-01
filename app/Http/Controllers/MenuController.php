@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MenuCreateRequest;
 use App\Model\Menu;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,11 @@ class MenuController extends Controller
         'status' => 1
     ];
 
+    public function __construct()
+    {
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +30,7 @@ class MenuController extends Controller
     public function index()
     {
         $pmenus = Menu::where('level',1)->get();
+
         return view('menu.index',['fields'=>$this->fields,'pmenus'=>$pmenus]);
     }
 
@@ -43,9 +50,20 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenuCreateRequest $request)
     {
-        //
+        $menu =new Menu();
+        foreach($this->fields as $field=>$default){
+            $menu->{$field} = $request->{$field}??$default;
+        }
+        //如果父级id不为0，说明是二级分类
+        $menu->level = $request->pid == 0 ? 1 : 2;
+        $res = $menu->save();
+        if($res){
+            return back()->with('success','创建菜单成功');
+        }else{
+            return back()->withErrors(['创建菜单失败']);
+        }
     }
 
     /**

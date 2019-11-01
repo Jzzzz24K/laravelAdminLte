@@ -18,7 +18,7 @@
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">菜单名称</label>
             <div class="col-sm-10">
-                <input id="title" type="text" name="title" class="form-control" placeholder="名称"
+                <input id="title" type="text" name="name" class="form-control" placeholder="名称"
                        value="{{$fields['name']}}">
             </div>
         </div>
@@ -35,6 +35,14 @@
                 <input id="url" type="text" name="url" class="form-control" placeholder="链接"
                        value="{{$fields['url']}}">
             </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 text-right" >状态</label>
+            <div class="col-sm-10">
+                开启:<input type="radio" name="status" class="minimal" value="1" checked>
+                关闭:<input type="radio" name="status" class="minimal" value="0">
+            </div>
+
         </div>
 
     </div>
