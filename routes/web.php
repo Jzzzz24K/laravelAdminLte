@@ -22,3 +22,6 @@ Route::get('/home', 'HomeController@home');
 
 
 Route::resource('/menu','MenuController');
+Route::resource('/adminuser',"AdminUserController");
+Route::resource('/role',"RoleController");
+Route::resource('/permission','PermissionController');

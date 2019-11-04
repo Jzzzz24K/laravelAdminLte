@@ -27,11 +27,11 @@
                     <i class="fa {{$menu->icon}}"></i> <span>{{$menu->name}}</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 @if($menu->children)
-                    @foreach($menu->children as $children)
-                        <ul class="treeview-menu">
-                            <li><a href="{{$children->url}}" target="mainiframe"><i class="fa {{$children->icon}}"></i>{{$children->name}}</a></li>
-                        </ul>
-                    @endforeach
+                    <ul class="treeview-menu">
+                        @foreach($menu->children as $children)
+                        <li><a href="{{$children->url}}" target="mainiframe"><i class="fa {{$children->icon}}"></i>{{$children->name}}</a></li>
+                        @endforeach
+                    </ul>
                 @endif
             </li>
             @endforeach

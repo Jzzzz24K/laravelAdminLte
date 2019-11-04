@@ -31,6 +31,9 @@ class HomeController extends Controller
     public function home()
     {
         $menus = Menu::where('level',1)->get();
+//        foreach($menus as $menu){
+//            dump($menu->children);
+//        }
         return view('home',compact('menus'));
     }
 }
