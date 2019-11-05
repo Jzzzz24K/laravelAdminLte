@@ -76,30 +76,30 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($permission as $value)
-                                                <tr role="row">
-                                                    <td>{{$value->id}}</td>
-                                                    <td>{{$value->name}}</td>
-                                                    <td>
-                                                        @foreach($value->routes as $route)
-                                                            <div>
-                                                                <span class="label label-success">{{$route}}</span>
-                                                            </div>
-                                                         @endforeach
-                                                    </td>
-                                                    <td>{{$value->created_at}}</td>
-                                                    <td>{{$value->updated_at}}</td>
-                                                    <td style="vertical-align: middle">
-                                                        <div class="text-center">
-                                                            <a type="button" class="btn btn-xs btn-warning">编辑</a>
-                                                            <a type="button" data-name="{{$value->id}}"
-                                                               class="del float-right btn btn-xs btn-danger"
-                                                               data-toggle="modal" >
-                                                                删除</a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                        @foreach($permission as $value)
+                                            <tr role="row">
+                                                <td>{{$value->id}}</td>
+                                                <td class="name">{{$value->name}}</td>
+                                                <td class="route">
+                                                    @foreach($value->routes as $route)
+                                                        <span class="label label-success"
+                                                              style="font-size: 14px; display: block;margin:.2em">{{$route}}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td>{{$value->created_at}}</td>
+                                                <td>{{$value->updated_at}}</td>
+                                                <td style="vertical-align: middle">
+                                                    <div class="text-center">
+                                                        <a type="button" data-toggle="modal" data-target="#modal-update"
+                                                           data-id="{{$value->id}}" class="edit btn btn-xs btn-warning">编辑</a>
+                                                        <a type="button" class="del float-right btn btn-xs btn-danger"
+                                                           data-toggle="modal" data-target="#modal-del"
+                                                           data-name="{{$value->name}}" data-id="{{$value->id}}">
+                                                            删除</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -122,9 +122,9 @@
                 </div>
             </div>
         </div>
-                @include('permission.create')
-                @include('permission.edit')
-                @include('permission.delete')
+        @include('permission.create')
+        @include('permission.edit')
+        @include('permission.delete')
     </section>
     <!-- /.box-body -->
 @stop
@@ -143,23 +143,53 @@
         //     $("#modal-create").show();
         // });
 
-        // $(".del").click(function (e) {
-        //     $("#modal-danger").modal("show");
-        //     $("#user").text($(e.target).data('name'));
-        // });
+        $(function () {
+            var leftSel = $('.selectL');
+            var rightSel = $('.selectR');
+            $('.toright').bind('click', function () {
+                leftSel.find("option:selected").each(function () {
+                    $(this).remove().appendTo(rightSel);
+                });
+            });
+            $('.toleft').bind('click', function () {
+                rightSel.find("option:selected").each(function () {
+                    $(this).remove().appendTo(leftSel);
+                });
+            });
 
-        var leftSel =$('#selectL');
-        var rightSel =$('#selectR');
-        $('#toright').bind('click',function(){
-            leftSel.find("option:selected").each(function(){
-                $(this).remove().appendTo(rightSel);
+            var editRSelect = $('#editSelectR');
+            var editLSelect = $('#editSelectL');
+
+            $('.toeditright').bind('click', function () {
+                editLSelect.find("option:selected").each(function () {
+                    $(this).remove().appendTo(editRSelect);
+                });
+            });
+            $('.toeditleft').bind('click', function () {
+                editRSelect.find("option:selected").each(function () {
+                    $(this).remove().appendTo(editLSelect);
+                });
+            });
+
+
+            $('.edit').click(function () {
+                var name = $(this).parents("tr").children('.name').text();
+                $('#permission_name').val(name);
+                var option = '';
+                $(this).parents("tr").children('.route').find("span").each(function () {
+                    option = option + "<option selected>" + $(this).text() + "</option>";
+                });
+                $('#editSelectR').html(option);
+                var id = $(this).data('id');
+                $('#edit_form').attr('action','/permission/' + id);
+
+            });
+
+            $('.del').click(function(){
+                $('#menu-name').html($(this).data('name'));
+                $('.delete-menu').attr('action','/permission/'+$(this).data('id'));
             });
         });
-        $('#toleft').bind('click',function(){
-            rightSel.find("option:selected").each(function(){
-                $(this).remove().appendTo(leftSel);
-            });
-        })
 
     </script>
 @stop

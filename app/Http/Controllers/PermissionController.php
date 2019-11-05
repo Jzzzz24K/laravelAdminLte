@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PermissionCreateRequest;
+use App\Http\Requests\PermissionUpdateRequest;
 use App\Services\PermissionService;
 use Illuminate\Http\Request;
 use App\Model\Permission;
@@ -98,9 +99,23 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PermissionUpdateRequest $request, $id)
     {
-        //
+        $data = $request->input();
+        $permission =Permission::find($id);
+        foreach($this->fields as $field=>$default){
+            if($field == 'routes'){
+                $permission->routes = implode(',',$data['routes']);
+            }else{
+                $permission->{$field} = $data[$field];
+            }
+        }
+        $res = $permission->save();
+        if($res){
+            return back()->with('success','修改权限成功');
+        }else{
+            return back()->withErrors(['修改权限失败']);
+        }
     }
 
     /**
@@ -111,6 +126,11 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res = Permission::destroy($id);
+        if($res){
+            return back()->with('success','删除权限成功');
+        }else{
+            return back()->withErrors(['删除权限失败']);
+        }
     }
 }
