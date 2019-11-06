@@ -53,13 +53,47 @@
                             <tbody>
                             @foreach($pmenus as $menu)
                                 <tr>
-                                    <td>{{$menu->name}}</td>
+                                    <td><i class="fa {{$menu->icon}}"></i> {{$menu->name}}</td>
                                     <td>{{$menu->url}}</td>
                                     <td>{{$menu->icon}}</td>
                                     <td>暂无</td>
                                     <td>{{$menu->status}}</td>
-                                    <td>编辑 删除</td>
+                                    <td style="vertical-align: middle">
+                                        <div class="text-center">
+                                            <a type="button" data-name="{{$menu->name}}" data-url="{{$menu->url}}"
+                                               data-icon="{{$menu->icon}}" data-status="{{$menu->status}}"
+                                               data-pid="{{$menu->pid}}" data-id="{{$menu->id}}"
+                                               class="edit btn btn-xs btn-warning">
+                                                编辑</a>
+                                            <a type="button" data-name="{{$menu->name}}" data-id="{{$menu->id}}"
+                                               class="del float-right btn btn-xs btn-danger"
+                                               data-toggle="modal" >
+                                                删除</a>
+                                        </div>
+                                    </td>
                                 </tr>
+                                @if($menu->children)
+                                        @foreach($menu->children as $cmenu)
+                                            <tr>
+                                                <td style="padding-left:2em"><i class="fa {{$cmenu->icon}}"></i> {{$cmenu->name}}</td>
+                                                <td>{{$cmenu->url}}</td>
+                                                <td>{{$cmenu->icon}}</td>
+                                                <td>暂无</td>
+                                                <td>{{$cmenu->status}}</td>
+                                                <td style="vertical-align: middle">
+                                                    <div class="text-center">
+                                                        <a type="button" data-name="{{$cmenu->name}}" data-url="{{$cmenu->url}}"
+                                                           data-icon="{{$cmenu->icon}}" data-status="{{$cmenu->status}}"
+                                                           data-pid="{{$cmenu->pid}}" data-id="{{$cmenu->id}}"
+                                                           class="edit btn btn-xs btn-warning">编辑</a>
+                                                        <a type="button"  class="del float-right btn btn-xs btn-danger"
+                                                           data-toggle="modal" data-name="{{$cmenu->name}}" data-id="{{$cmenu->id}}">
+                                                            删除</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -90,14 +124,16 @@
             $(".del").click(function (e) {
                 $("#modal-del").modal("show");
                 let id = $(e.target).data('id');
-                $('.delete-menu').attr('action','menu/'+id);
-                $('#menu-name').text($(e.target).data('title'));
+                $('.delete-menu').attr('action','/menu/'+id);
+                $('#menu-name').text($(e.target).data('name'));
             });
             $(".edit").click(function (e) {
                 $("#modal-edit").modal("show");
-                $(".menu-form").attr("action",'menu/'+ $(e.target).data("id"));
-                $("#title").attr("value", $(e.target).data("title"));
-                $("#position").attr("value", $(e.target).data("position"));
+                $(".edit-form").attr("action",'menu/'+ $(e.target).data("id"));
+                $("#fname").find("option[value='"+ $(e.target).data('pid') +"']").attr("selected",true);
+                // console.log($("#fname option[value= '"+ $(e.target).data('pid') +"']").text());
+                $("#name").attr("value", $(e.target).data("name"));
+                $("#status").attr("value", $(e.target).data("status"));
                 $("#url").attr("value", $(e.target).data("url"));
                 $("#icon").attr("value", $(e.target).data("icon"));
             });
@@ -117,7 +153,6 @@
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' /* optional */
             });
-
         });
 
     </script>

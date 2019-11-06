@@ -6,7 +6,7 @@
                     <span aria-hidden="true">×</span></button>
                 <h4 class="menu-title modal-title" style="color: white;">创建菜单</h4>
             </div>
-            <form class="menu-form form-horizontal" action="/menu" method="post">
+            <form class="create_menu menu-form form-horizontal" action="/menu" method="post">
                 @include('menu.form')
 
                 <div class="modal-footer">

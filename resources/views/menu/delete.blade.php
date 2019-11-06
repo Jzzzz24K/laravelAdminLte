@@ -6,7 +6,7 @@
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">删除</h4>
             </div>
-            <form class="delete-menu" action="" method="post">
+            <form class="delete-menu" action= "" method="post">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <input type="hidden" name="_method" value="DELETE">
                 <div class="modal-body">

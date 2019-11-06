@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MenuCreateRequest;
+use App\Http\Requests\MenuUpdateRequest;
 use App\Model\Menu;
 use Illuminate\Http\Request;
 
@@ -29,9 +30,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $pmenus = Menu::where('level',1)->get();
+        $pmenus = Menu::where('level', 1)->get();
 
-        return view('menu.index',['fields'=>$this->fields,'pmenus'=>$pmenus]);
+        return view('menu.index', ['fields' => $this->fields, 'pmenus' => $pmenus]);
     }
 
     /**
@@ -47,21 +48,21 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(MenuCreateRequest $request)
     {
-        $menu =new Menu();
-        foreach($this->fields as $field=>$default){
-            $menu->{$field} = $request->{$field}??$default;
+        $menu = new Menu();
+        foreach ($this->fields as $field => $default) {
+            $menu->{$field} = $request->{$field} ?? $default;
         }
         //如果父级id不为0，说明是二级分类
         $menu->level = $request->pid == 0 ? 1 : 2;
         $res = $menu->save();
-        if($res){
-            return back()->with('success','创建菜单成功');
-        }else{
+        if ($res) {
+            return back()->with('success', '创建菜单成功');
+        } else {
             return back()->withErrors(['创建菜单失败']);
         }
     }
@@ -69,7 +70,7 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -80,7 +81,7 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -91,23 +92,44 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MenuUpdateRequest $request, $id)
     {
         //
+        $data = $request->input();
+        $menu = Menu::find($id);
+        foreach ($this->fields as $field => $default) {
+            $menu->{$field} = $data[$field] ?? $default;
+        }
+        $menu->level = $request->pid == 0 ? 1 : 2;
+        $res = $menu->save();
+        if ($res) {
+            return back()->with('success', '修改菜单成功');
+        } else {
+            return back()->withErrors(['修改菜单失败']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $menu = Menu::find($id);
+        if ($menu->children) {
+            return back()->withErrors(['该菜单有子菜单，删除失败']);
+        }
+        $res = $menu->delete();
+        if ($res) {
+            return back()->with('success', '删除菜单成功');
+        } else {
+            return back()->withErrors(['删除菜单失败']);
+        }
     }
 }

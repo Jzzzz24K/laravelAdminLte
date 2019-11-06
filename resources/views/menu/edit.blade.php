@@ -6,7 +6,7 @@
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" style="color: white;">编辑菜单</h4>
             </div>
-            <form class="menu-form form-horizontal" action="" method="post">
+            <form class="edit-form menu-form form-horizontal" action="" method="post">
                 <input type="hidden" name="_method" value="PUT">
                 @include('menu.form')
                 <div class="modal-footer">

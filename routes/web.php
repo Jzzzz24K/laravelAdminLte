@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return redirect('/home');
 });
@@ -25,3 +27,7 @@ Route::resource('/menu','MenuController');
 Route::resource('/adminuser',"AdminUserController");
 Route::resource('/role',"RoleController");
 Route::resource('/permission','PermissionController');
+//图标库
+Route::get('icons', function () {
+    return view('icons');
+});
