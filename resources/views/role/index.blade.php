@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('styles')
+    <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
+@stop
 @section('content')
     <section class="content-header">
         <h1>
@@ -57,6 +60,12 @@
                                                 style="width: 203.667px;">
                                                 角色描述
                                             </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Browser: activate to sort column ascending"
+                                                style="width: 203.667px;">
+                                                拥有权限
+                                            </th>
 
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                 colspan="1"
@@ -77,11 +86,19 @@
                                             <tr role="row">
                                                 <td>{{$value['name']}}</td>
                                                 <td>{{$value['description']}}</td>
+                                                <td class="permission">
+                                                @foreach($value['permission'] as $permission)
+                                                    <span class="label label-success" data-id="{{$permission['id']}}" style="font-size: 14px;margin:.2em">{{$permission['name']}}</span>
+                                                @endforeach
+                                                </td>
                                                 <td>{{$value['created_at']}}</td>
                                                 <td style="vertical-align: middle">
                                                     <div class="text-center">
-                                                        <a type="button" class="btn btn-xs btn-warning">编辑</a>
+                                                        <a type="button" data-id="{{$value['id']}}"
+                                                           data-name="{{$value['name']}}" data-description="{{$value['description']}}"
+                                                           class="edit btn btn-xs btn-warning">编辑</a>
                                                         <a type="button" data-name="{{$value['name']}}"
+                                                           data-id="{{$value['id']}}"
                                                            class="del float-right btn btn-xs btn-danger"
                                                            data-toggle="modal" >
                                                             删除</a>
@@ -117,7 +134,8 @@
     </section>
     <!-- /.box-body -->
 @stop
-@section('script')
+@section('scripts')
+    <script src="{{asset('js/select2.full.js')}}"></script>
     <script>
         // $('#example1').DataTable({
         //     'paging'      : false,
@@ -128,14 +146,32 @@
         //     'autoWidth'   : true,
         //     'scrollX'     : true,
         // });
-        $('#addRole').click(function(){
-            $("#modal-create").show();
-        });
+        $(function(){
+            $('#addRole').click(function(){
+                $("#modal-create").show();
+            });
 
-        $(".del").click(function (e) {
-            $("#modal-danger").modal("show");
-            $("#user").text($(e.target).data('name'));
-        });
+            $(".del").click(function (e) {
+                $("#modal-del").modal("show");
+                $("#menu-name").text($(e.target).data('name'));
+                $('.delete-menu').attr('action','/role/'+ $(e.target).data('id'));
+            });
+
+            $(".edit").click(function(){
+                $("#modal-edit").modal("show");
+                $('#description').val($(this).data('description'));
+                $('#name').val($(this).data('name'));
+                $('#edit-form').attr('action','/role/'+ $(this).data('id'));
+                let permission_id = [];
+                $(this).parents('td').prevAll('.permission').find('span').each(function(){
+                    permission_id.push($(this).data('id'));
+                });
+                $("#permission_id").val(permission_id).select2()
+            });
+
+            $('#select2').select2();
+        })
+
     </script>
 @stop
 

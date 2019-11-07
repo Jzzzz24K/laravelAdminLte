@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Model\Permission;
 use App\Model\Role;
 use Illuminate\Http\Request;
 
@@ -21,9 +24,11 @@ class RoleController extends Controller
     {
         //
         $keyword = $request->input('keyword', '');
-        $result = Role::where('name', 'like', "%{$keyword}")->get();
+        $roles = Role::where('name', 'like', "%{$keyword}")->with('permission')->get();
+        $result = $roles->toArray();
         $fields = $this->fields;
-        return view('role/index', compact('keyword', 'result', 'fields'));
+        $permissions = Permission::all();
+        return view('role/index', compact('keyword', 'result', 'fields', 'permissions'));
     }
 
     /**
@@ -42,7 +47,7 @@ class RoleController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleCreateRequest $request)
     {
         $data = $request->input();
         $role = new Role;
@@ -51,8 +56,9 @@ class RoleController extends Controller
         }
         $res = $role->save();
         if ($res) {
-            return back()->with('success','添加角色成功');
-        }else{
+            $role->permission()->attach($data['permission_id']);
+            return back()->with('success', '添加角色成功');
+        } else {
             return back()->withErrors(['添加角色失败']);
         }
     }
@@ -86,9 +92,19 @@ class RoleController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleUpdateRequest $request, $id)
     {
-        //
+        $role = Role::find($id);
+        foreach($this->fields as $field=>$default){
+            $role->{$field} = $request->{$field};
+        }
+        $role->save();
+        $data = $role->permission()->sync($request->permission_id);
+        if($data){
+            return back()->with('success','修改角色成功');
+        }else{
+            return back()->withErrors(['修改角色失败']);
+        }
     }
 
     /**
@@ -100,5 +116,11 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
+        $res = Role::destroy($id);
+        if($res){
+            return back()->with('success','删除角色成功');
+        }else{
+            return back()->withErrors(['删除角色失败']);
+        }
     }
 }

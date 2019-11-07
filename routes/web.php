@@ -21,8 +21,6 @@ Auth::routes();
 
 Route::get('/index', 'HomeController@index');
 Route::get('/home', 'HomeController@home');
-
-
 Route::resource('/menu','MenuController');
 Route::resource('/adminuser',"AdminUserController");
 Route::resource('/role',"RoleController");

@@ -7,7 +7,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">父级菜单</label>
             <div class="col-sm-10">
-                <select id="fname" name="pid" class="form-control select2" style="width: 100%;height: 34px;">
+                <select id="fname" name="pid" class="form-control select2 edit_select2" style="width: 100%;height: 34px;">
                     <option value="0" >顶级菜单</option>
                     @foreach($pmenus as $pmenu)
                         <option value="{{$pmenu->id}}">{{$pmenu->name}}</option>
