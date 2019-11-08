@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminUserCreateRequest;
+use App\Http\Requests\AdminUserUpdateRequest;
+use App\Model\Role;
 use App\User;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
 {
+    protected $fields = [
+        'name' => '',
+        'email' => '',
+        'password' => '',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +23,10 @@ class AdminUserController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword','');
-        $user = User::where('name','like',"%{$keyword}%")->paginate(config('admin.pageSize'));
-        return view('user/index',compact('keyword','user'));
+        $user = User::where('name','like',"%{$keyword}%")->with('role')->paginate(config('admin.pageSize'));
+        $fields = $this->fields;
+        $roles = Role::all();
+        return view('user/index',compact('keyword','user','fields','roles'));
     }
 
     /**
@@ -30,14 +40,22 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param AdminUserCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AdminUserCreateRequest $request)
     {
-        //
+        $user = new User;
+        foreach($this->fields as $field=>$default){
+            $user->{$field} = $request->{$field};
+        }
+        $res = $user->save();
+        $user->role()->attach($request->role);
+        if($res){
+            return back()->with('success','创建管理员成功');
+        }else{
+            return back()->withErrors(['创建管理员失败']);
+        }
     }
 
     /**
@@ -69,9 +87,22 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminUserUpdateRequest $request, $id)
     {
         //
+        $user = User::find($id);
+        foreach($this->fields as $field => $default){
+            if(isset($request->{$field})){
+                $user->{$field} = $request->{$field};
+            }
+        }
+        $user->save();
+        $res = $user->role()->sync($request->role);
+        if($res){
+            return back()->with('success','修改用户成功');
+        }else{
+            return back()->withErrors(['修改用户信息成功']);
+        }
     }
 
     /**
@@ -83,5 +114,13 @@ class AdminUserController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::find($id);
+        $user->delete();
+        $res = $user->role()->detach();
+        if($res){
+            return back()->with('success','删除用户成功');
+        }else{
+            return back()->withErrors(['删除用户失败']);
+        }
     }
 }

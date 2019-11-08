@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('styles')
+    <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
+@stop
 @section('content')
     <section class="content-header">
         <h1>
@@ -16,15 +19,21 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                {{--                    <div class="box-header">--}}
-                {{--                        <h3 class="box-title">Data Table With Full Features</h3>--}}
-                {{--                    </div>--}}
-                <!-- /.box-header -->
                     <div class="box-body">
                         <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                             <form method="get">
                                 <div class="row">
-                                    <div class="col-sm-12 text-right">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_length" id="example1_length">
+                                            <button id="addRole" class="dataTables_filter btn btn-primary"
+                                                    data-toggle="modal"
+                                                    data-target="#modal-create" type="button"><i
+                                                    class="fa fa-fw fa-plus"></i>添加管理员
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
                                         <div id="example1_filter" class="dataTables_filter">
                                             <label>ID/用户名:
                                                 <input type="search" class="form-control input-sm" placeholder=""
@@ -34,7 +43,8 @@
                                     </div>
                                 </div>
                             </form>
-
+                            @include('partials.error')
+                            @include('partials.success')
                             <div class="row">
                                 <div class="col-sm-12">
                                     <table id="example1" class="table table-bordered table-striped dataTable"
@@ -53,6 +63,12 @@
                                                 aria-label="Browser: activate to sort column ascending"
                                                 style="width: 203.667px;">
                                                 用户名
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Browser: activate to sort column ascending"
+                                                style="width: 203.667px;">
+                                                邮箱
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                 colspan="1"
@@ -79,14 +95,24 @@
                                             <tr role="row">
                                                 <td>{{$value['id']}}</td>
                                                 <td>{{$value['name']}}</td>
-                                                <td></td>
+                                                <td>{{$value['email']}}</td>
+                                                <td class="role">
+                                                    @foreach($value['role'] as $item)
+                                                        <span class="label label-success" data-id="{{$item['id']}}"
+                                                              style="font-size: 14px;margin:.2em">{{$item['name']}}</span>
+                                                    @endforeach
+                                                </td>
                                                 <td>{{$value['created_at']}}</td>
                                                 <td style="vertical-align: middle">
                                                     <div class="text-center">
-                                                        <a type="button" class="btn btn-xs btn-warning">编辑</a>
-                                                        <a type="button" data-name="{{$value['username']}}"
+                                                        <a type="button" class="edit btn btn-xs btn-warning"
+                                                           data-toggle="modal" data-id="{{$value['id']}}"
+                                                           data-target="#modal-edit" data-name="{{$value['name']}}"
+                                                           data-email="{{$value['email']}}"
+                                                        >编辑</a>
+                                                        <a type="button" data-name="{{$value['name']}}"
                                                            class="del float-right btn btn-xs btn-danger"
-                                                           data-toggle="modal" >
+                                                           data-toggle="modal" data-target="#modal-del" data-id="{{$value['id']}}">
                                                             删除</a>
                                                     </div>
                                                 </td>
@@ -100,12 +126,12 @@
                                 <div class="col-sm-5">
                                     <div class="dataTables_info" id="example1_info" role="status"
                                          aria-live="polite">
-{{--                                        总共 {{$result->total()}} 条--}}
+                                        {{--                                        总共 {{$result->total()}} 条--}}
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-{{--                                        {{$result->appends(['keyword'=>$keyword])->links()}}--}}
+                                        {{--                                        {{$result->appends(['keyword'=>$keyword])->links()}}--}}
                                     </div>
                                 </div>
                             </div>
@@ -114,30 +140,14 @@
                 </div>
             </div>
         </div>
-        <div class="modal modal-danger fade in" id="modal-danger" style="padding-top: 100px;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">危险</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>确定要删除<kbd><span id="user">file</span></kbd>这个用户吗?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-outline">删除</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
+        @include('user.create')
+        @include('user.edit')
+        @include('user.delete')
     </section>
     <!-- /.box-body -->
 @stop
-@section('script')
+@section('scripts')
+    <script src="{{asset('js/select2.full.js')}}"></script>
     <script>
         // $('#example1').DataTable({
         //     'paging'      : false,
@@ -148,10 +158,21 @@
         //     'autoWidth'   : true,
         //     'scrollX'     : true,
         // });
-        $(".del").click(function (e) {
-            $("#modal-danger").modal("show");
-            $("#user").text($(e.target).data('name'));
+        $(".del").click(function () {
+            $("#user-name").text($(this).data('name'));
+            $(".delete-menu").attr('action','/adminuser/'+ $(this).data('id'));
         });
+
+        $(".edit").click(function () {
+            $("#edit-form").attr('action','/adminuser/' + $(this).data('id'));
+            $("#name").val($(this).data('name'));
+            let role_id = [];
+            $(this).parents('td').prevAll('.role').find('span').each(function(){
+                role_id.push($(this).data('id'));
+            });
+            $('#edit_role').val(role_id).select2();
+        });
+        $('#select2').select2();
     </script>
 @stop
 

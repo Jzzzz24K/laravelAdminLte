@@ -116,7 +116,9 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
-        $res = Role::destroy($id);
+        $role = Role::find($id);
+        $role->delete();
+        $res = $role->permission()->detach();
         if($res){
             return back()->with('success','删除角色成功');
         }else{
