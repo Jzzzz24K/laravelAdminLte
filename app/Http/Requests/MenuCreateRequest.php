@@ -26,6 +26,7 @@ class MenuCreateRequest extends FormRequest
         return [
             'pid'=>'required',
             'name' => 'required',
+            'role' => 'required'
         ];
     }
 
@@ -34,6 +35,7 @@ class MenuCreateRequest extends FormRequest
         return [
             'name.required' => '菜单名称不能为空',
             'pid.required' => '请选择父级菜单',
+            'role.required' => '请选择所属角色'
         ];
     }
 }
