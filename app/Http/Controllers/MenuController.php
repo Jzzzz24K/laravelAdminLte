@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MenuCreateRequest;
 use App\Http\Requests\MenuUpdateRequest;
 use App\Model\Menu;
+use App\Model\Role;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -30,9 +31,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $pmenus = Menu::where('level', 1)->get();
-
-        return view('menu.index', ['fields' => $this->fields, 'pmenus' => $pmenus]);
+        $pmenus = Menu::with('role')->where('level', 1)->get();
+        $roles = Role::all();
+        return view('menu.index', ['fields' => $this->fields, 'pmenus' => $pmenus, 'roles' => $roles]);
     }
 
     /**
@@ -61,6 +62,7 @@ class MenuController extends Controller
         $menu->level = $request->pid == 0 ? 1 : 2;
         $res = $menu->save();
         if ($res) {
+            $menu->role()->attach($request->role);
             return back()->with('success', '创建菜单成功');
         } else {
             return back()->withErrors(['创建菜单失败']);
@@ -107,6 +109,7 @@ class MenuController extends Controller
         $menu->level = $request->pid == 0 ? 1 : 2;
         $res = $menu->save();
         if ($res) {
+            $menu->role()->sync($request->role);
             return back()->with('success', '修改菜单成功');
         } else {
             return back()->withErrors(['修改菜单失败']);
@@ -122,11 +125,12 @@ class MenuController extends Controller
     public function destroy($id)
     {
         $menu = Menu::find($id);
-        if ($menu->children) {
+        if ($menu->children->toArray()) {
             return back()->withErrors(['该菜单有子菜单，删除失败']);
         }
         $res = $menu->delete();
         if ($res) {
+            $menu->role()->detach();
             return back()->with('success', '删除菜单成功');
         } else {
             return back()->withErrors(['删除菜单失败']);

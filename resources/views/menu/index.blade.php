@@ -56,7 +56,11 @@
                                     <td><i class="fa {{$menu->icon}}"></i> {{$menu->name}}</td>
                                     <td>{{$menu->url}}</td>
                                     <td>{{$menu->icon}}</td>
-                                    <td>暂无</td>
+                                    <td>
+                                        @foreach($menu->role as $role)
+                                            <span class="label label-success" data-id="{{$role['id']}}" style="font-size: 14px;margin:.2em">{{$role['name']}}</span>
+                                        @endforeach
+                                    </td>
                                     <td>{{$menu->status}}</td>
                                     <td style="vertical-align: middle">
                                         <div class="text-center">
@@ -78,7 +82,11 @@
                                                 <td style="padding-left:2em"><i class="fa {{$cmenu->icon}}"></i> {{$cmenu->name}}</td>
                                                 <td>{{$cmenu->url}}</td>
                                                 <td>{{$cmenu->icon}}</td>
-                                                <td>暂无</td>
+                                                <td class="role">
+                                                    @foreach($cmenu->role as $role)
+                                                        <span class="label label-success" data-id="{{$role['id']}}" style="font-size: 14px;margin:.2em">{{$role['name']}}</span>
+                                                    @endforeach
+                                                </td>
                                                 <td>{{$cmenu->status}}</td>
                                                 <td style="vertical-align: middle">
                                                     <div class="text-center">
@@ -136,6 +144,11 @@
                 $("#status").attr("value", $(e.target).data("status"));
                 $("#url").attr("value", $(e.target).data("url"));
                 $("#icon").attr("value", $(e.target).data("icon"));
+                let role = [];
+                $(this).parents('td').prevAll('.role').find('span').each(function(){
+                    role.push($(this).data('id'));
+                });
+                $("#edit-select").val(role).select2();
             });
             $('#addMenu').click(function(){
                 $(".menu-title").text('创建菜单');
@@ -147,7 +160,7 @@
                 $(".parentid").attr('value',$(e.target).data('id'));
             });
 
-            $('.select2').select2();
+            $("#select2").select2();
 
             $('input[type="radio"].minimal').iCheck({
                 radioClass: 'iradio_square-blue',

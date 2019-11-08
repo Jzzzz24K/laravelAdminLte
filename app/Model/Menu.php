@@ -11,4 +11,9 @@ class Menu extends Model
     {
         return $this->hasMany(self::class,'pid');
     }
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class,'menu_role');
+    }
 }
