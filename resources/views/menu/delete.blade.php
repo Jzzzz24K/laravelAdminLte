@@ -1,4 +1,4 @@
-<div class="modal modal-danger fade" id="modal-del" style="">
+<div class="modal modal-danger fade" id="modal-del">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

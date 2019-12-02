@@ -1,8 +1,10 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/css/select2.min.css": "/css/select2.min.css",
-    "/js/select2.full.js": "/js/select2.full.js",
-    "/js/datatables.js": "/js/datatables.js",
-    "/js/icheck.js": "/js/icheck.js"
+    "/js/app.js": "/js/app.js?id=81e865d1491442f55c7b",
+    "/css/app.css": "/css/app.css?id=6b41faf42818d94b0f2e",
+    "/js/icheck.js": "/js/icheck.js?id=99cfbead758ede6160e1",
+    "/js/select2.full.js": "/js/select2.full.js?id=b16e217d567d3783bc58",
+    "/css/daterangepicker.css": "/css/daterangepicker.css?id=2fba2a36f4a0188d6ac5",
+    "/js/moment.min.js": "/js/moment.min.js?id=761502841c035afcf6a9",
+    "/js/daterangepicker.js": "/js/daterangepicker.js?id=d7702cf2756c1633aa49",
+    "/js/bootstrap-datepicker.min.js": "/js/bootstrap-datepicker.min.js?id=37807363a13de55c2184"
 }

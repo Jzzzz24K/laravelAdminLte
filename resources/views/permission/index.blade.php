@@ -122,10 +122,12 @@
                 </div>
             </div>
         </div>
-        @include('permission.create')
-        @include('permission.edit')
-        @include('permission.delete')
+
     </section>
+
+    @include('permission.create')
+    @include('permission.edit')
+    @include('permission.delete')
     <!-- /.box-body -->
 @stop
 @section('scripts')

@@ -21,9 +21,9 @@
     @include('layouts.header')
     @include('layouts.left')
     <div class="content-wrapper">
-        <iframe name="mainiframe" id="mainiframe" width="100%" height="600" src="/index"
+        <iframe name="mainiframe" id="mainiframe" width="100%"  src="/index"
                 frameborder="0" marginwidth="0" marginheight="0" scrolling="auto"
-                onload="this.height=this.contentWindow.document.documentElement.scrollHeight"
+                onload="changeFrameHeight()"
         ></iframe>
     </div>
     @include('layouts.footer')
@@ -31,5 +31,22 @@
 </div>
 <!-- ./wrapper -->
 <script src="{{asset('js/app.js')}}"></script>
+<script>
+    function changeFrameHeight(){
+        var ifm= document.getElementById("mainiframe");
+        ifm.height=document.documentElement.clientHeight - 50 - 60;
+    }
+    window.onresize=function(){
+        var ua = navigator.userAgent.toLowerCase();
+
+        var screenwidth = window.screen.width;
+        // console.log("屏幕宽度为", screenwidth);
+        if (!/iphone|ipad|ipod/.test(ua)) {
+        } else {
+            document.getElementById("mainiframe").width = screenwidth;
+        }
+        changeFrameHeight();
+    }
+</script>
 </body>
 </html>

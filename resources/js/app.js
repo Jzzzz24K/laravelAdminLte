@@ -7,6 +7,9 @@
 
 require('./bootstrap');
 
+require('admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js');
+require('admin-lte/bower_components/datatables.net/js/jquery.dataTables.js');
+require('admin-lte/bower_components/fastclick/lib/fastclick.js');
 require('admin-lte');
 // require('admin-lte/bower_components/raphael/raphael.min.js');
 // require('admin-lte/bower_components/morris.js/morris.min.js');
