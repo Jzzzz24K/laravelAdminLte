@@ -17,7 +17,8 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg"></p>
-
+        @include('layouts.success')
+        @include('layouts.error')
         <form action="/login" method="post">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class="form-group has-feedback">
