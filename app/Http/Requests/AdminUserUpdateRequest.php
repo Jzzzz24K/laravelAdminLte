@@ -10,6 +10,7 @@ class AdminUserUpdateRequest extends AdminUserCreateRequest
     {
         return [
             'name' => 'required',
+            'role' => 'required'
         ];
     }
 }

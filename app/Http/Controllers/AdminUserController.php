@@ -115,9 +115,9 @@ class AdminUserController extends Controller
     {
         //
         $user = User::find($id);
-        $user->delete();
-        $res = $user->role()->detach();
+        $res =  $user->delete();
         if($res){
+            $user->role()->detach();
             return back()->with('success','删除用户成功');
         }else{
             return back()->withErrors(['删除用户失败']);

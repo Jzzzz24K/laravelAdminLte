@@ -37,7 +37,7 @@
                             <label for="inputPassword3" class="col-sm-2 control-label">选择角色</label>
                             <div class="col-sm-10">
                                 <select id="select2" name="role[]" multiple="multiple" class="form-control"
-                                        data-placeholder="选择角色">
+                                        data-placeholder="选择角色" style="width: 100%">
                                     @foreach($roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
                                     @endforeach

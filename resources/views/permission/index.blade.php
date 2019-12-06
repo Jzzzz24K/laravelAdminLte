@@ -52,7 +52,7 @@
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                                 colspan="1"
                                                 aria-label="Platform(s): activate to sort column ascending"
-                                                style="width: 179.667px;">
+                                                style="width:379.667px;">
                                                 路由
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
@@ -83,7 +83,7 @@
                                                 <td class="route">
                                                     @foreach($value->routes as $route)
                                                         <span class="label label-success"
-                                                              style="font-size: 14px; display: block;margin:.2em">{{$route}}</span>
+                                                              >{{$route}}</span>
                                                     @endforeach
                                                 </td>
                                                 <td>{{$value->created_at}}</td>

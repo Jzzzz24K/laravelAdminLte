@@ -24,9 +24,10 @@ class AdminUserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:users',
             'email' => 'required|unique:users',
-            'password' => 'required'
+            'password' => 'required',
+            'role' => 'required'
         ];
     }
 
@@ -34,6 +35,7 @@ class AdminUserCreateRequest extends FormRequest
     {
         return [
             'email:unique' => '该邮箱已经被注册',
+            'name:unique' => '该用户名已经被注册',
         ];
     }
 }
