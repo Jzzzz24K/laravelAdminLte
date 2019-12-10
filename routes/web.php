@@ -11,20 +11,21 @@
 |
 */
 
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return redirect('/home');
-});
+//use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/index', 'HomeController@index');
-Route::get('/home', 'HomeController@home');
-Route::resource('/menu','MenuController');
-Route::resource('/adminuser',"AdminUserController");
-Route::resource('/role',"RoleController");
-Route::resource('/permission','PermissionController');
+Route::group(['middleware'=>['auth','rbac']],function(){
+    Route::get('/', 'HomeController@home');
+    Route::get('/index', 'HomeController@index');
+    Route::resource('/menu','MenuController');
+    Route::resource('/adminuser',"AdminUserController");
+    Route::resource('/role',"RoleController");
+    Route::resource('/permission','PermissionController');
+});
+Route::get('403', 'HomeController@noPermission');
+
+
 //图标库
 Route::get('icons', function () {
     return view('icons');

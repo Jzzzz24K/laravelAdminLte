@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Menu;
 use App\Model\Role;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -31,6 +32,24 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsToMany(Role::class,'user_role');
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+    public function getMenus()
+    {
+        return $this->role->map(function ($role) {
+            return $role->menu()->with(['children'=>function($query){
+                return $query->where('status',Menu::STATUS_ON);
+            }])->where(['level' => 1, 'status' => Menu::STATUS_ON])->get();
+        })->collapse()->unique('id');
+    }
+
+    public function getPermissions()
+    {
+        return $this->role->map(function ($role){
+            return $role->permission;
+        })->collapse()->map(function ($permission) {
+            return $permission->routes;
+        })->collapse();
     }
 }

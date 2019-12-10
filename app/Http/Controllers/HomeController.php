@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,16 +25,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         return view('index');
     }
 
     public function home()
     {
-        $menus = Menu::where('level',1)->get();
-//        foreach($menus as $menu){
-//            dump($menu->children);
-//        }
+        $menus = Auth::user()->getMenus();
+//        dump($menus);die;
         return view('home',compact('menus'));
+    }
+
+    public function noPermission()
+    {
+        return view('403');
     }
 }
