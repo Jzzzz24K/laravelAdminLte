@@ -171,6 +171,11 @@
                 editRSelect.find("option:selected").each(function () {
                     $(this).remove().appendTo(editLSelect);
                 });
+                // console.log(editRSelect.find("option"));
+                // editRSelect.find("option").each(function(){
+                //     $(this).attr('selected',true);
+                // })
+
             });
 
 
@@ -186,7 +191,6 @@
                 $('#edit_form').attr('action','/permission/' + id);
 
             });
-
             $('.del').click(function(){
                 $('#menu-name').html($(this).data('name'));
                 $('.delete-menu').attr('action','/permission/'+$(this).data('id'));

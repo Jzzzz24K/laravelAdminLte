@@ -56,7 +56,7 @@
                                     <td><i class="fa {{$menu->icon}}"></i> {{$menu->name}}</td>
                                     <td>{{$menu->url}}</td>
                                     <td>{{$menu->icon}}</td>
-                                    <td>
+                                    <td class="role">
                                         @foreach($menu->role as $role)
                                             <span class="label label-success" data-id="{{$role['id']}}" style="font-size: 14px;margin:.2em">{{$role['name']}}</span>
                                         @endforeach

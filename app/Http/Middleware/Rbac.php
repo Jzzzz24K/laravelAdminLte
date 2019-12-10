@@ -17,7 +17,7 @@ class Rbac
         $permissions = $user->getPermissions();
         $currentRoute = Route::current();
         $route = $currentRoute->methods()[0] .':' . $currentRoute->uri;
-        if(!in_array($route,$permissions->toArray())){
+        if(!in_array($route,$permissions->toArray()) && !$user->isSuperUser()){
             return redirect('403');
         }
 
