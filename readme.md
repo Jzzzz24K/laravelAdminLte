@@ -18,7 +18,3 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 ![image](https://jingze.oss-cn-beijing.aliyuncs.com/jzblog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20191210173354.png)
 
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
