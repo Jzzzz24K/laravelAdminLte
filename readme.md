@@ -12,9 +12,9 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 #### 3.实现管理员,角色,菜单,权限的RBAC权限功能;
 #### 4.配套菜单管理,管理员管理,角色管理,权限管理;
 
-## 安装
+## 项目截图
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
 
 ## Security Vulnerabilities
 
