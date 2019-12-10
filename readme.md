@@ -6,10 +6,13 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 - [adminLte](https://adminlte.io/).
 
 
-## 如何安装
+## 主要功能介绍
+#### 1.laravel自带auth登录功能;
+#### 2.使用iframe架构;
+#### 3.实现管理员,角色,菜单,权限的RBAC权限功能;
+#### 4.配套菜单管理,管理员管理,角色管理,权限管理;
 
-
-## Contributing
+## 安装
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
