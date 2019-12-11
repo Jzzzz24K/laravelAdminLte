@@ -39,5 +39,5 @@ php artisan migrate
 ```
 php artisan db:seeder
 ```
-< admin为超级用户,拥有所有菜单和权限.
+> admin为超级用户,拥有所有菜单和权限.
 
