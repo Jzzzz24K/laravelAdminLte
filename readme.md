@@ -20,11 +20,11 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 
 ## 安装
 
-#### 1.composer安装
+#### 1.克隆下代码后,composer安装
 ```
 composer install
 ```
-#### 2.刷新key
+#### 2.创建key,并创建.env进行相关配置
 
 ```
 php artisan key:generate
