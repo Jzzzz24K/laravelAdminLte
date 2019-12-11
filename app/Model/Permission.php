@@ -11,4 +11,9 @@ class Permission extends Model
     {
         return explode(',',$value);
     }
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }
