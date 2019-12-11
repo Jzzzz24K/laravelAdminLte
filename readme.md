@@ -17,4 +17,27 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 ![image](https://jingze.oss-cn-beijing.aliyuncs.com/jzblog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20191210172504.png)
 ![image](https://jingze.oss-cn-beijing.aliyuncs.com/jzblog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20191210173354.png)
 
+## 安装
+
+#### 1.composer安装
+```
+composer install
+```
+#### 2.刷新key
+
+```
+php artisan key:generate
+```
+#### 3.数据库迁移
+
+```
+php artisan migrate
+```
+
+#### 4.添加必要数据
+
+```
+php artisan db:seeder
+```
+< admin为超级用户,拥有所有菜单和权限.
 
