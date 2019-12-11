@@ -6,18 +6,15 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 - [adminLte](https://adminlte.io/).
 
 
-## 如何安装
+## 主要功能介绍
+#### 1.laravel自带auth登录功能;
+#### 2.使用iframe架构;
+#### 3.实现管理员,角色,菜单,权限的RBAC权限功能;
+#### 4.配套菜单管理,管理员管理,角色管理,权限管理;
 
+## 项目截图
 
-## Contributing
+![image](https://jingze.oss-cn-beijing.aliyuncs.com/jzblog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20191210172504.png)
+![image](https://jingze.oss-cn-beijing.aliyuncs.com/jzblog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20191210173354.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
