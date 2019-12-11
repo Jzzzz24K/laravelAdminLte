@@ -23,7 +23,7 @@ class AdminUserController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword','');
-        $user = User::where('name','like',"%{$keyword}%")->with('role')->paginate(config('admin.pageSize'));
+        $user = User::where('name','like',"{$keyword}%")->with('role')->paginate(config('admin.pageSize'));
         $fields = $this->fields;
         $roles = Role::all();
         return view('user/index',compact('keyword','user','fields','roles'));
