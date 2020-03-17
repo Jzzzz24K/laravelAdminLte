@@ -3,19 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Model\Menu;
+use App\Model\View;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**x`
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('index');
+        $date = Carbon::now()->toDateString();
+        $viewsCount = View::whereDate('created_at',$date)->count();
+        return view('index',['viewsCount'=>$viewsCount]);
     }
 
     public function home()

@@ -20,9 +20,9 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h4>{{$viewsCount}}</h4>
 
-                    <p>New Orders</p>
+                    <p>今日访问量</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
