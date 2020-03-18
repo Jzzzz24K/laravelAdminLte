@@ -6,12 +6,19 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 - [adminLte](https://adminlte.io/).
 
 
+
+
 ## 主要功能介绍
 #### 1.laravel自带auth登录功能;
 #### 2.使用iframe架构;
 #### 3.实现管理员,角色,菜单,权限的RBAC权限功能;
 #### 4.配套菜单管理,管理员管理,角色管理,权限管理;
 #### 5.调用了icheck,datepicker,select2,datatable等jquery插件,并通过Mix统一编译.
+
+## 项目访问
+#### 地址：- [adminlte.onlineze.com](https://adminlte.onlineze.com).
+#### 用户名：youke
+#### 密码： youke
 
 ## 项目截图
 
