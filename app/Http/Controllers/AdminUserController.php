@@ -46,8 +46,12 @@ class AdminUserController extends Controller
     public function store(AdminUserCreateRequest $request)
     {
         $user = new User;
-        foreach($this->fields as $field=>$default){
-            $user->{$field} = $request->{$field};
+        foreach($request->only(['name','email','password']) as $field=>$value){
+            if ($field == 'password') {
+                $user->{$field} = bcrypt($value);
+            } else {
+                $user->{$field} = $value;
+            }
         }
         $res = $user->save();
         $user->role()->attach($request->role);
