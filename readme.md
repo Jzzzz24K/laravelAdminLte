@@ -16,7 +16,7 @@ laravel-adminlte 通过轻量级前端框架adminLte和laravel框架搭建的后
 #### 5.调用了icheck,datepicker,select2,datatable等jquery插件,并通过Mix统一编译.
 
 ## 项目访问
-#### 地址：- [adminlte.onlineze.com](https://adminlte.onlineze.com).
+#### 地址：[adminlte.onlineze.com](http://adminlte.onlineze.com).
 #### 用户名：youke
 #### 密码： youke
 
