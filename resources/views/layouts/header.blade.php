@@ -226,7 +226,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">设置</a>
+                                <a href="/modifyPassword" target="mainiframe" class="btn btn-default btn-flat">修改密码</a>
                             </div>
                             <div class="pull-right">
                                 <form action="{{route('logout')}}" method="post">
